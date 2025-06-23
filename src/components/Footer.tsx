@@ -68,7 +68,7 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-800 pt-6 sm:pt-8">
+        <div className="border-t border-gray-800 pt-6 sm:pt-8 text-center md:text-left">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm sm:text-base">
               <p>&copy; 2025 DJ Chezzy. Alle Rechte vorbehalten.</p>
@@ -78,6 +78,12 @@ const Footer = () => {
               <Heart className="w-4 h-4 text-red-500 fill-current" />
               <span>for music lovers</span>
             </div>
+          </div>
+          {/* Disclaimer */}
+          <div className="mt-6 md:mt-4 text-center">
+            <p className="text-xs text-gray-500">
+              Diese Webseite dient ausschließlich zu demonstrativen Zwecken und ist nicht für die kommerzielle Nutzung bestimmt.
+            </p>
           </div>
         </div>
       </div>
