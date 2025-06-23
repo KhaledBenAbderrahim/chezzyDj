@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowDown, ChevronLeft, ChevronRight, Music, Star } from 'lucide-react';
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imageErrors, setImageErrors] = useState<{[key: number]: boolean}>({});
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   const slides = [
     {
@@ -38,6 +41,32 @@ const Hero = () => {
     }
   ];
 
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      navigateSlide('next');
+    } else if (isRightSwipe) {
+      navigateSlide('prev');
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -57,7 +86,14 @@ const Hero = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section id="hero" className="relative h-screen bg-black text-white overflow-hidden">
+    <section 
+      id="hero" 
+      className="relative h-screen bg-black text-white overflow-hidden"
+      ref={heroRef}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Background Slides */}
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
@@ -88,45 +124,50 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* Enhanced Navigation Arrows */}
+      {/* Navigation Arrows - Hidden on Mobile (md and up only) */}
       <button
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 w-14 h-14 bg-black/30 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-black/50 hover:scale-110 transition-all duration-300 border border-white/20 group"
+        className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-30 w-14 h-14 bg-black/30 backdrop-blur-md rounded-full items-center justify-center hover:bg-black/50 hover:scale-110 transition-all duration-300 border border-white/20 group"
         onClick={() => navigateSlide('prev')}
       >
         <ChevronLeft className="w-6 h-6 group-hover:text-emerald-400 transition-colors" />
       </button>
       <button
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 w-14 h-14 bg-black/30 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-black/50 hover:scale-110 transition-all duration-300 border border-white/20 group"
+        className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-30 w-14 h-14 bg-black/30 backdrop-blur-md rounded-full items-center justify-center hover:bg-black/50 hover:scale-110 transition-all duration-300 border border-white/20 group"
         onClick={() => navigateSlide('next')}
       >
         <ChevronRight className="w-6 h-6 group-hover:text-emerald-400 transition-colors" />
       </button>
 
-      {/* Enhanced Content with Better Positioning */}
-      <div className="relative z-20 flex flex-col justify-end h-full p-8 md:p-12 lg:p-16">
+      {/* Mobile Swipe Indicator */}
+      <div className="md:hidden absolute top-6 left-1/2 -translate-x-1/2 z-30 bg-black/20 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+        <p className="text-white/70 text-xs uppercase tracking-wider">← Swipe →</p>
+      </div>
+
+      {/* Enhanced Content with Better Mobile Positioning */}
+      <div className="relative z-20 flex flex-col justify-end h-full p-4 sm:p-6 md:p-12 lg:p-16">
         <div className="max-w-4xl text-left">
           <div key={currentSlide} className="animate-fadeInUp">
-            <div className="inline-flex items-center space-x-2 bg-emerald-500/20 backdrop-blur-sm rounded-full px-4 py-2 mb-4 border border-emerald-500/30">
-              <Music className="w-4 h-4 text-emerald-400" />
-              <p className="text-emerald-400 font-semibold tracking-widest uppercase text-sm">
+            <div className="inline-flex items-center space-x-2 bg-emerald-500/20 backdrop-blur-sm rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-3 sm:mb-4 border border-emerald-500/30">
+              <Music className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400" />
+              <p className="text-emerald-400 font-semibold tracking-widest uppercase text-xs sm:text-sm">
                 {currentSlideData.subtitle}
               </p>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black my-6 leading-tight bg-gradient-to-r from-white via-white to-emerald-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black my-4 sm:my-6 leading-tight bg-gradient-to-r from-white via-white to-emerald-400 bg-clip-text text-transparent">
               {currentSlideData.title}
             </h1>
             
-            <p className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-2xl mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-2xl mb-6 sm:mb-8 leading-relaxed">
               {currentSlideData.description}
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-4 px-8 rounded-full text-lg uppercase tracking-wider hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/50 transition-all duration-300 border border-emerald-400/30">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <button className="bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full text-base sm:text-lg uppercase tracking-wider hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/50 transition-all duration-300 border border-emerald-400/30">
                 {currentSlideData.primaryButton}
               </button>
               
-              <button className="bg-white/10 backdrop-blur-sm text-white font-semibold py-4 px-8 rounded-full text-lg hover:bg-white/20 transition-all duration-300 border border-white/30">
+              <button className="bg-white/10 backdrop-blur-sm text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-full text-base sm:text-lg hover:bg-white/20 transition-all duration-300 border border-white/30">
                 Portfolio ansehen
               </button>
             </div>
@@ -134,13 +175,13 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Enhanced Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-4">
+      {/* Enhanced Slide Indicators - Better Mobile Positioning */}
+      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-3 sm:space-x-4">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`relative transition-all duration-300 ${index === currentSlide ? 'w-8 h-3' : 'w-3 h-3'}`}
+            className={`relative transition-all duration-300 ${index === currentSlide ? 'w-6 h-2.5 sm:w-8 sm:h-3' : 'w-2.5 h-2.5 sm:w-3 sm:h-3'}`}
           >
             <div className={`w-full h-full rounded-full transition-all duration-300 ${
               index === currentSlide 
@@ -151,8 +192,8 @@ const Hero = () => {
         ))}
       </div>
 
-      {/* Scroll Down Indicator */}
-      <div className="absolute bottom-8 right-8 z-20 hidden md:flex flex-col items-center space-y-2">
+      {/* Scroll Down Indicator - Hidden on mobile */}
+      <div className="absolute bottom-8 right-8 z-20 hidden lg:flex flex-col items-center space-y-2">
         <span className="text-white/70 text-sm uppercase tracking-wider transform -rotate-90 origin-center">Scroll</span>
         <ArrowDown className="w-8 h-8 animate-bounce text-emerald-400" />
       </div>

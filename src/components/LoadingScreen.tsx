@@ -71,7 +71,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
             style={{ transition: 'stroke-dashoffset 0.2s linear' }}
           />
         </svg>
-
+            
         {/* DJ Photo with reveal mask */}
         <div 
           className="relative w-full h-full rounded-full overflow-hidden flex items-center justify-center"
@@ -80,9 +80,9 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
             className="absolute inset-0 w-full h-full bg-black rounded-full transition-transform duration-300 ease-in-out"
             style={{ transform: `scale(${1.1 - (progress / 100)})` }}
           ></div>
-          <img
+              <img 
             src="/assets/images/hero/Hero3.png"
-            alt="DJ Chezzy"
+                alt="DJ Chezzy"
             className="w-full h-full object-cover object-top scale-125"
             style={{ objectPosition: '50% 25%' }}
           />
@@ -92,13 +92,13 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
         <div className="absolute flex flex-col items-center justify-center text-white">
           <span className="font-mono text-5xl font-bold tracking-tighter">
             {Math.floor(progress)}
-          </span>
+            </span>
           <span className="font-sans text-sm uppercase tracking-[0.2em] text-emerald-400">
             Loading
-          </span>
+            </span>
         </div>
       </div>
-      
+
       {/* Adding custom keyframe animations */}
       <style>{`
         @keyframes pulse-slow {

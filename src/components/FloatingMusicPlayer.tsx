@@ -13,47 +13,39 @@ const FloatingMusicPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const { t } = useLanguage();
 
-  // Playlist mit echten Latino-Tracks (Demo URLs - in Produktion würdest du echte MP3s verwenden)
+  // Lokale Musikdateien
   const playlist = [
     {
-      title: "Salsa Sunset Mix",
+      title: "Tropical Vibes Mix",
       artist: "DJ Chezzy",
       genre: "Salsa",
       duration: "4:32",
-      url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Demo - ersetze mit echten MP3s
-      cover: "https://images.pexels.com/photos/5765874/pexels-photo-5765874.jpeg"
+      url: "/assets/music/music1.mpeg",
+      cover: "/assets/images/hero/Hero1.png"
     },
     {
       title: "Reggaeton Nights",
       artist: "DJ Chezzy",
-      genre: "Reggaeton",
+      genre: "Reggaeton", 
       duration: "3:45",
-      url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Demo - ersetze mit echten MP3s
-      cover: "https://images.pexels.com/photos/1701202/pexels-photo-1701202.jpeg"
+      url: "/assets/music/music2.mpeg",
+      cover: "/assets/images/hero/Hero2.png"
     },
     {
       title: "Bachata Romance",
       artist: "DJ Chezzy",
       genre: "Bachata",
-      duration: "4:18",
-      url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Demo - ersetze mit echten MP3s
-      cover: "https://images.pexels.com/photos/8412246/pexels-photo-8412246.jpeg"
+      duration: "4:18", 
+      url: "/assets/music/music3.mpeg",
+      cover: "/assets/images/hero/Hero3.png"
     },
     {
-      title: "Querbeat Fiesta",
+      title: "Latin Fiesta",
       artist: "DJ Chezzy",
-      genre: "Querbeat",
+      genre: "Mixed",
       duration: "3:52",
-      url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Demo - ersetze mit echten MP3s
-      cover: "https://images.pexels.com/photos/8412181/pexels-photo-8412181.jpeg"
-    },
-    {
-      title: "Merengue Madness",
-      artist: "DJ Chezzy",
-      genre: "Merengue",
-      duration: "4:05",
-      url: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Demo - ersetze mit echten MP3s
-      cover: "https://images.pexels.com/photos/5765874/pexels-photo-5765874.jpeg"
+      url: "/assets/music/music4.mpeg",
+      cover: "/assets/images/hero/Hero1.png"
     }
   ];
 
@@ -71,7 +63,7 @@ const FloatingMusicPlayer = () => {
           // Autoplay was prevented, user needs to interact first
         });
       }
-    }, 2000); // Start after 2 seconds
+    }, 3000); // Start after 3 seconds
 
     return () => clearTimeout(timer);
   }, []);
@@ -169,44 +161,45 @@ const FloatingMusicPlayer = () => {
         preload="metadata"
       />
 
-      {/* Floating Player - ALWAYS VISIBLE */}
-      <div className={`fixed bottom-4 right-4 z-50 transition-all duration-300 ${
-        isExpanded ? 'w-80' : 'w-16'
+      {/* Floating Player - Mobile Optimized */}
+      <div className={`fixed bottom-4 right-2 sm:right-4 z-50 transition-all duration-300 ${
+        isExpanded ? 'w-72 sm:w-80' : 'w-14 sm:w-16'
       }`}>
         
         {/* Expanded Player */}
         {isExpanded && (
-          <div className="bg-gray-900/95 backdrop-blur-md rounded-xl border border-gray-700 p-4 mb-2 shadow-2xl">
+          <div className="bg-gray-900/95 backdrop-blur-md rounded-xl border border-gray-700 p-3 sm:p-4 mb-2 shadow-2xl">
             {/* Header */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
               <div className="flex items-center gap-2">
-                <Music className="text-orange-500" size={16} />
-                <span className="text-sm font-medium text-orange-400">{t('player.title')}</span>
+                <Music className="text-emerald-500" size={14} />
+                <span className="text-xs sm:text-sm font-medium text-emerald-400">DJ Chezzy</span>
               </div>
               <button
                 onClick={() => setIsExpanded(false)}
-                className="text-gray-400 hover:text-white transition-colors"
-                title={t('player.minimize')}
+                className="text-gray-400 hover:text-white transition-colors p-1"
+                title="Minimieren"
               >
-                <Minimize2 size={16} />
+                <Minimize2 size={14} />
               </button>
             </div>
 
             {/* Current Track Info */}
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <img
                 src={currentSong.cover}
                 alt={currentSong.title}
-                className="w-12 h-12 rounded-lg object-cover"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover"
               />
               <div className="flex-1 min-w-0">
-                <h4 className="text-white font-medium text-sm truncate">{currentSong.title}</h4>
-                <p className="text-gray-400 text-xs">{currentSong.artist} • {currentSong.genre}</p>
+                <h4 className="text-white font-medium text-xs sm:text-sm truncate">{currentSong.title}</h4>
+                <p className="text-gray-400 text-xs truncate">{currentSong.artist}</p>
+                <span className="text-emerald-400 text-xs">{currentSong.genre}</span>
               </div>
             </div>
 
             {/* Progress Bar */}
-            <div className="mb-4">
+            <div className="mb-3 sm:mb-4">
               <input
                 type="range"
                 min="0"
@@ -222,40 +215,40 @@ const FloatingMusicPlayer = () => {
             </div>
 
             {/* Controls */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
               <button
                 onClick={prevTrack}
-                className="text-gray-400 hover:text-white transition-colors"
-                title={t('player.previous')}
+                className="text-gray-300 hover:text-white transition-colors p-1"
+                title="Vorheriger Track"
               >
-                <SkipBack size={20} />
+                <SkipBack size={16} />
               </button>
               
               <button
                 onClick={togglePlay}
-                className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white hover:scale-105 transition-transform"
-                title={isPlaying ? t('player.pause') : t('player.play')}
+                className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-2 sm:p-3 transition-colors"
+                title={isPlaying ? "Pause" : "Play"}
               >
-                {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                {isPlaying ? <Pause size={16} /> : <Play size={16} />}
               </button>
               
               <button
                 onClick={nextTrack}
-                className="text-gray-400 hover:text-white transition-colors"
-                title={t('player.next')}
+                className="text-gray-300 hover:text-white transition-colors p-1"
+                title="Nächster Track"
               >
-                <SkipForward size={20} />
+                <SkipForward size={16} />
               </button>
             </div>
 
             {/* Volume Control */}
-            <div className="flex items-center gap-2 mb-4">
-              <button 
-                onClick={toggleMute} 
-                className="text-gray-400 hover:text-white"
-                title={isMuted ? t('player.unmute') : t('player.mute')}
+            <div className="flex items-center gap-2 mb-3">
+              <button
+                onClick={toggleMute}
+                className="text-gray-400 hover:text-white transition-colors"
+                title={isMuted ? "Unmute" : "Mute"}
               >
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
               </button>
               <input
                 type="range"
@@ -263,41 +256,33 @@ const FloatingMusicPlayer = () => {
                 max="100"
                 value={isMuted ? 0 : volume * 100}
                 onChange={handleVolumeChange}
-                className="flex-1 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                className="flex-1 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
               />
             </div>
 
             {/* Playlist */}
-            <div className="max-h-40 overflow-y-auto">
-              <h5 className="text-xs font-medium text-gray-400 mb-2">{t('player.playlist')}</h5>
+            <div className="max-h-32 sm:max-h-40 overflow-y-auto">
+              <h5 className="text-xs font-medium text-gray-400 mb-2 uppercase tracking-wider">Playlist</h5>
               {playlist.map((track, index) => (
                 <button
                   key={index}
                   onClick={() => selectTrack(index)}
-                  className={`w-full flex items-center gap-2 p-2 rounded-lg text-left transition-colors ${
+                  className={`w-full text-left p-2 rounded-lg mb-1 transition-colors ${
                     index === currentTrack
-                      ? 'bg-orange-500/20 border border-orange-500/30'
-                      : 'hover:bg-gray-800/50'
+                      ? 'bg-emerald-500/20 text-emerald-400'
+                      : 'text-gray-300 hover:bg-gray-800'
                   }`}
                 >
-                  <div className="w-8 h-8 rounded bg-gray-700 flex items-center justify-center flex-shrink-0">
-                    {index === currentTrack && isPlaying ? (
-                      <div className="flex gap-1">
-                        <div className="w-1 h-3 bg-orange-500 animate-pulse"></div>
-                        <div className="w-1 h-2 bg-orange-500 animate-pulse" style={{animationDelay: '0.1s'}}></div>
-                        <div className="w-1 h-4 bg-orange-500 animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                      </div>
-                    ) : (
-                      <Play size={12} className="text-gray-400" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className={`text-xs truncate ${
-                      index === currentTrack ? 'text-orange-400' : 'text-white'
-                    }`}>
-                      {track.title}
-                    </p>
-                    <p className="text-xs text-gray-400">{track.genre}</p>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={track.cover}
+                      alt={track.title}
+                      className="w-6 h-6 rounded object-cover"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-medium truncate">{track.title}</div>
+                      <div className="text-xs text-gray-500 truncate">{track.genre}</div>
+                    </div>
                   </div>
                 </button>
               ))}
@@ -305,73 +290,42 @@ const FloatingMusicPlayer = () => {
           </div>
         )}
 
-        {/* Compact Player Button - ALWAYS VISIBLE */}
-        <div className="flex items-center justify-center">
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden"
-            title={isExpanded ? t('player.minimize') : t('player.expand')}
-          >
-            {!isExpanded ? (
-              <>
-                {isPlaying ? (
-                  <>
-                    <Pause size={24} />
-                    <div className="absolute inset-0 bg-white/20 animate-ping rounded-full"></div>
-                  </>
-                ) : (
-                  <Play size={24} />
-                )}
-              </>
-            ) : (
-              <Minimize2 size={24} />
-            )}
-          </button>
-        </div>
-
-        {/* Now Playing Info - Compact Mode */}
-        {!isExpanded && (
-          <div className="absolute bottom-20 right-0 bg-gray-900/95 backdrop-blur-md rounded-lg p-2 border border-gray-700 opacity-0 hover:opacity-100 transition-opacity duration-300 w-64">
-            <div className="flex items-center gap-2">
-              <img
-                src={currentSong.cover}
-                alt={currentSong.title}
-                className="w-8 h-8 rounded object-cover"
-              />
-              <div className="flex-1 min-w-0">
-                <p className="text-xs text-white truncate">{currentSong.title}</p>
-                <p className="text-xs text-gray-400">{currentSong.artist}</p>
-              </div>
-              {isPlaying && (
-                <div className="flex gap-1">
-                  <div className="w-1 h-2 bg-orange-500 animate-pulse"></div>
-                  <div className="w-1 h-3 bg-orange-500 animate-pulse" style={{animationDelay: '0.1s'}}></div>
-                  <div className="w-1 h-2 bg-orange-500 animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        {/* Compact Player Button - Mobile Optimized */}
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-all duration-300 border-2 border-emerald-400/30 ${
+            isPlaying ? 'animate-pulse' : ''
+          }`}
+          title={isExpanded ? "Minimieren" : "Music Player öffnen"}
+        >
+          {isExpanded ? (
+            <Minimize2 className="text-white" size={18} />
+          ) : isPlaying ? (
+            <Pause className="text-white" size={18} />
+          ) : (
+            <Play className="text-white ml-0.5" size={18} />
+          )}
+        </button>
       </div>
 
-      {/* Custom Styles */}
-      <style jsx>{`
+      <style>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
           width: 12px;
           height: 12px;
           border-radius: 50%;
-          background: #f97316;
+          background: #10b981;
           cursor: pointer;
+          border: 2px solid #065f46;
         }
         
         .slider::-moz-range-thumb {
           width: 12px;
           height: 12px;
           border-radius: 50%;
-          background: #f97316;
+          background: #10b981;
           cursor: pointer;
-          border: none;
+          border: 2px solid #065f46;
         }
       `}</style>
     </>
