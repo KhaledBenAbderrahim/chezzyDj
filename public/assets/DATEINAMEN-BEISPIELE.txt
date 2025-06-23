@@ -1,0 +1,45 @@
+🎵 DJ CHEZZY - BEISPIEL DATEINAMEN
+
+=== HERO BILDER (3 Bilder benötigt) ===
+public/assets/images/hero/
+├── Hero1.png ✅ VORHANDEN - Hauptbild DJ Chezzy
+├── Hero2.png ✅ VORHANDEN - Event/Performance Bild
+└── Hero3.png ✅ VORHANDEN - Latin/Urban Vibes Bild
+
+=== ABOUT PROFILBILD ===
+public/assets/images/about/
+└── hero5.png ✅ VORHANDEN - DJ Profilbild
+
+=== GALERIE BILDER (beliebig viele) ===
+public/assets/images/gallery/
+├── hochzeit-1.jpg
+├── hochzeit-2.jpg
+├── club-night.jpg
+├── festival.jpg
+├── geburtstag.jpg
+├── corporate.jpg
+├── konzert.jpg
+├── sommerfest.jpg
+├── private-feier.jpg
+└── ... (weitere Event-Fotos)
+
+=== TESTIMONIAL BILDER ===
+public/assets/images/testimonials/
+├── kunde1.jpg (150x150px)
+├── kunde2.jpg (150x150px)
+└── kunde3.jpg (150x150px)
+
+=== MUSIK DATEIEN ===
+public/assets/music/
+├── music1.mpeg ✅ VORHANDEN (2.7MB) - Salsa Caliente
+├── music2.mpeg ✅ VORHANDEN (2.8MB) - Bachata Romance
+├── music3.mpeg ✅ VORHANDEN (2.6MB) - Reggaeton Fire
+├── music4.mpeg ✅ VORHANDEN (2.7MB) - Latin Hits
+└── ... (weitere Musik-Samples)
+
+WICHTIGE HINWEISE:
+- Keine Leerzeichen oder Sonderzeichen in Dateinamen
+- Verwenden Sie Bindestriche (-) statt Leerzeichen
+- Unterstützte Bildformate: .jpg, .png, .webp
+- Unterstützte Musikformate: .mp3, .wav, .ogg
+- Maximale Dateigröße: Bilder 5MB, Musik 10MB 

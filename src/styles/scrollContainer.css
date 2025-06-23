@@ -1,0 +1,41 @@
+/* Normal Page Scroll Container */
+.scroll-container {
+  /* No special properties needed for normal scroll */
+}
+
+.scroll-section {
+  position: relative;
+  width: 100%;
+  /* min-height is no longer needed, sections will size naturally */
+}
+
+/* HERO SECTION - Base Layer */
+.hero-section {
+  /* No special z-index needed anymore */
+  position: relative;
+}
+
+/* Remove scroll snap and custom scrollbar styles */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* CUSTOM SCROLLBAR for the whole page (optional) */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #10b981, #059669);
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #059669, #047857);
+}

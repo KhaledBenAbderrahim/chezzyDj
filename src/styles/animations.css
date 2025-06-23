@@ -1,0 +1,37 @@
+/* INTERSECTION OBSERVER ANIMATIONS */
+.card-section {
+  opacity: 1;
+  transform: translateY(0);
+  transition: 
+    opacity 0.8s ease-out,
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Loading state für Sections */
+.card-section.loading {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+}
+
+/* Intersection Observer Animation States */
+.card-section.in-view {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.card-section.out-of-view {
+  transform: translateY(20px) scale(0.98);
+  opacity: 0.95;
+}
+
+/* DESKTOP HOVER EFFECTS */
+@media (min-width: 1024px) {
+  .card-section:hover {
+    transform: translateY(-4px) scale(1.002);
+    box-shadow: 
+      0 -25px 50px rgba(0, 0, 0, 0.2),
+      0 -15px 30px rgba(0, 0, 0, 0.15),
+      0 -8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}

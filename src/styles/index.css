@@ -1,0 +1,5 @@
+/* Main styles index file */
+@import './scrollContainer.css';
+@import './cardSection.css';
+@import './animations.css';
+@import './performance.css';
