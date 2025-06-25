@@ -19,30 +19,30 @@ const MusicPlayer = () => {
   const [autoPlayEnabled, setAutoPlayEnabled] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-    const songs: Song[] = [
-    { 
-      id: 1, 
-      title: "Salsa Caliente", 
-      artist: "DJ Chezzy Mix", 
+  const songs: Song[] = [
+    {
+      id: 1,
+      title: "Bachata Romance",
+      artist: "DJ Chezzy Mix",
       src: "/assets/music/music1.mpeg"
     },
-    { 
-      id: 2, 
-      title: "Bachata Romance", 
-      artist: "DJ Chezzy Mix", 
+    {
+      id: 2,
+      title: "Salsa Caliente",
+      artist: "DJ Chezzy Mix",
+      src: "/assets/music/music4.mpeg"
+    },
+    {
+      id: 3,
+      title: "Merengue Passion",
+      artist: "DJ Chezzy Mix",
       src: "/assets/music/music2.mpeg"
     },
-    { 
-      id: 3, 
-      title: "Reggaeton Fire", 
-      artist: "DJ Chezzy Mix", 
+    {
+      id: 4,
+      title: "Cumbia Colombiana",
+      artist: "DJ Chezzy Mix",
       src: "/assets/music/music3.mpeg"
-    },
-    { 
-      id: 4, 
-      title: "Latin Hits", 
-      artist: "DJ Chezzy Mix", 
-      src: "/assets/music/music4.mpeg"
     }
   ];
 
@@ -82,7 +82,7 @@ const MusicPlayer = () => {
           return new Promise((resolve) => {
             setTimeout(async () => {
               try {
-                await audio.play();
+          await audio.play();
                 setIsPlaying(true);
                 // Gradually increase volume
                 setTimeout(() => {
@@ -136,7 +136,7 @@ const MusicPlayer = () => {
         document.removeEventListener('click', handleUserInteraction);
         document.removeEventListener('keydown', handleUserInteraction);
         document.removeEventListener('touchstart', handleUserInteraction);
-      }
+    }
     };
 
     // Listen for any user interaction
@@ -171,26 +171,26 @@ const MusicPlayer = () => {
   const nextSong = () => {
     setCurrentSongIndex((prev) => (prev + 1) % songs.length);
   };
-  
+
   const prevSong = () => {
     setCurrentSongIndex((prev) => (prev - 1 + songs.length) % songs.length);
   };
 
   // Auto-play when song changes
   useEffect(() => {
-    const audio = audioRef.current;
+        const audio = audioRef.current;
     if (!audio || currentSongIndex === 0) return; // Skip for initial load
 
     const playNewSong = async () => {
       if (isPlaying) {
-        try {
+          try {
           audio.volume = volume;
-          await audio.play();
-        } catch (error) {
+            await audio.play();
+          } catch (error) {
           console.log('Failed to play new song:', error);
         }
-      }
-    };
+    }
+  };
 
     // Small delay to ensure new song is loaded
     setTimeout(playNewSong, 100);
@@ -244,7 +244,7 @@ const MusicPlayer = () => {
       {/* Compact Player */}
       {!isExpanded && (
         <div className="bg-black/90 backdrop-blur-md rounded-full p-2 shadow-2xl border border-white/20 flex items-center space-x-2 min-w-[200px] sm:min-w-[250px]">
-          <button 
+        <button
             onClick={togglePlay} 
             className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
               isPlaying 
@@ -252,7 +252,7 @@ const MusicPlayer = () => {
                 : !autoPlayEnabled 
                   ? 'bg-emerald-500 hover:bg-emerald-600 animate-pulse' 
                   : 'bg-emerald-500 hover:bg-emerald-600'
-            }`}
+          }`}
             title={!isPlaying && !autoPlayEnabled ? 'Klicken um Musik zu starten' : ''}
           >
             {isPlaying ? <Pause size={16} className="text-white" /> : <Play size={16} className="text-white ml-0.5" />}

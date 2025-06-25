@@ -26,7 +26,7 @@ const FloatingMusicPlayer = () => {
     {
       title: "Reggaeton Nights",
       artist: "DJ Chezzy",
-      genre: "Reggaeton", 
+      genre: "Reggaeton",
       duration: "3:45",
       url: "/assets/music/music2.mpeg",
       cover: "/assets/images/hero/Hero2.png"
@@ -35,7 +35,7 @@ const FloatingMusicPlayer = () => {
       title: "Bachata Romance",
       artist: "DJ Chezzy",
       genre: "Bachata",
-      duration: "4:18", 
+      duration: "4:18",
       url: "/assets/music/music3.mpeg",
       cover: "/assets/images/hero/Hero3.png"
     },
@@ -243,8 +243,8 @@ const FloatingMusicPlayer = () => {
 
             {/* Volume Control */}
             <div className="flex items-center gap-2 mb-3">
-              <button
-                onClick={toggleMute}
+              <button 
+                onClick={toggleMute} 
                 className="text-gray-400 hover:text-white transition-colors"
                 title={isMuted ? "Unmute" : "Mute"}
               >
@@ -282,7 +282,7 @@ const FloatingMusicPlayer = () => {
                     <div className="flex-1 min-w-0">
                       <div className="text-xs font-medium truncate">{track.title}</div>
                       <div className="text-xs text-gray-500 truncate">{track.genre}</div>
-                    </div>
+                  </div>
                   </div>
                 </button>
               ))}
@@ -291,22 +291,22 @@ const FloatingMusicPlayer = () => {
         )}
 
         {/* Compact Player Button - Mobile Optimized */}
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
           className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-all duration-300 border-2 border-emerald-400/30 ${
             isPlaying ? 'animate-pulse' : ''
           }`}
           title={isExpanded ? "Minimieren" : "Music Player öffnen"}
-        >
+          >
           {isExpanded ? (
             <Minimize2 className="text-white" size={18} />
           ) : isPlaying ? (
             <Pause className="text-white" size={18} />
-          ) : (
+                ) : (
             <Play className="text-white ml-0.5" size={18} />
-          )}
-        </button>
-      </div>
+            )}
+          </button>
+        </div>
 
       <style>{`
         .slider::-webkit-slider-thumb {

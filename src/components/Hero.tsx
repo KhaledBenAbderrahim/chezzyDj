@@ -152,19 +152,19 @@ const Hero = () => {
               <p className="text-emerald-400 font-semibold tracking-widest uppercase text-xs sm:text-sm">
                 {currentSlideData.subtitle}
               </p>
-            </div>
-            
+                  </div>
+
             <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black my-4 sm:my-6 leading-tight bg-gradient-to-r from-white via-white to-emerald-400 bg-clip-text text-transparent">
               {currentSlideData.title}
-            </h1>
-            
+                </h1>
+              
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 max-w-2xl mb-6 sm:mb-8 leading-relaxed">
-              {currentSlideData.description}
-            </p>
-            
+                {currentSlideData.description}
+              </p>
+              
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button className="bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full text-base sm:text-lg uppercase tracking-wider hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/50 transition-all duration-300 border border-emerald-400/30">
-                {currentSlideData.primaryButton}
+                  {currentSlideData.primaryButton}
               </button>
               
               <button className="bg-white/10 backdrop-blur-sm text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-full text-base sm:text-lg hover:bg-white/20 transition-all duration-300 border border-white/30">

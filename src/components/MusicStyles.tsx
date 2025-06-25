@@ -127,13 +127,13 @@ const MusicStyles = () => {
                       : 'shadow-md shadow-black/50'
                   }`}>
                     {/* Background Image - More Transparent */}
-                    <img 
+                <img 
                       src={djImages[index % djImages.length]}
                       alt={`DJ Chezzy - ${style.name}`}
                       className={`w-full h-full object-cover transition-all duration-600 ease-in-out ${
                         isActive ? 'scale-110 opacity-70' : 'scale-100 opacity-50'
                       }`}
-                    />
+                />
                     
                     {/* Enhanced Overlay - Stronger for more transparency */}
                     <div className={`absolute inset-0 bg-gradient-to-t transition-opacity duration-600 ${
@@ -141,13 +141,13 @@ const MusicStyles = () => {
                         ? 'from-black/98 via-black/85 to-black/60 opacity-100' 
                         : 'from-black/90 via-black/70 to-black/40 opacity-90'
                     }`}></div>
-                    
+                
                     {/* Active Card Glow Effect */}
                     {isActive && (
                       <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/30 via-emerald-500/10 to-transparent opacity-50"></div>
                     )}
               
-                    {/* Content */}
+              {/* Content */}
                     <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 md:p-8">
                       <div className={`transition-all duration-600 ${isActive ? 'transform translate-y-0 opacity-100' : 'transform translate-y-4 opacity-70'}`}>
                         <h4 className={`text-2xl sm:text-3xl lg:text-4xl font-black mb-2 transition-all duration-600 ${
@@ -155,25 +155,25 @@ const MusicStyles = () => {
                             ? 'text-white group-hover:text-emerald-400' 
                             : 'text-white/80'
                         }`}>
-                          {style.name}
+                    {style.name}
                         </h4>
                         
                         <p className={`text-sm sm:text-base mb-3 sm:mb-4 transition-all duration-600 ${
                           isActive ? 'text-white/90' : 'text-white/60'
                         }`}>
-                          {style.description}
-                        </p>
-                        
+                  {style.description}
+                </p>
+                
                         <div className={`border-t border-white/20 pt-3 sm:pt-4 transition-all duration-600 ${
                           isActive ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-2'
                         }`}>
                           <p className="text-xs sm:text-sm text-emerald-400/80 font-mono tracking-wider">
                             {style.artists}
                           </p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
+                </div>
+              </div>
+            </div>
                 )}
               </SwiperSlide>
           ))}

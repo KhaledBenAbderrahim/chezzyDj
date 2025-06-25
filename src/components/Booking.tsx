@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Clock, MapPin, Music, Users } from 'lucide-react';
+import { Calendar, Clock, MapPin, Music, Users, Loader2, Send, X, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Booking = () => {
@@ -17,6 +17,10 @@ const Booking = () => {
     musicPreference: '',
     message: ''
   });
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const eventTypes = {
     de: ['Hochzeit', 'Geburtstag', 'Firmenfeier', 'Clubnacht', 'Festival', 'Private Party', 'Open Air', 'Sonstiges'],
@@ -31,23 +35,71 @@ const Booking = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Vielen Dank für deine Buchungsanfrage! Ich melde mich schnell bei dir zurück.');
+    setShowModal(true);
+    setIsLoading(true);
     
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      date: '',
-      time: '',
-      venue: '',
-      eventType: '',
-      guestCount: '',
-      musicPreference: '',
-      message: ''
-    });
+    try {
+      // Simulate email sending (in real app, this would be an API call)
+      const emailData = {
+        to: 'ricalechampion@gmail.com',
+        subject: `Buchungsanfrage von ${formData.name}`,
+        body: `
+          Neue Buchungsanfrage:
+          
+          Name: ${formData.name}
+          E-Mail: ${formData.email}
+          Telefon: ${formData.phone}
+          Datum: ${formData.date}
+          Uhrzeit: ${formData.time}
+          Veranstaltungsort: ${formData.venue}
+          Event-Typ: ${formData.eventType}
+          Anzahl Gäste: ${formData.guestCount}
+          Musik-Präferenz: ${formData.musicPreference}
+          
+          Nachricht:
+          ${formData.message}
+        `,
+        ...formData
+      };
+      
+      console.log('Email would be sent to ricalechampion@gmail.com:', emailData);
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      setIsLoading(false);
+      setIsSubmitted(true);
+      
+      // Don't auto-close - user must close manually
+      
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setIsLoading(false);
+      alert('Fehler beim Senden der Anfrage. Bitte versuchen Sie es erneut.');
+      setShowModal(false);
+    }
+  };
+
+  const closeModal = () => {
+    if (!isLoading) {
+      // Reset form when closing
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        time: '',
+        venue: '',
+        eventType: '',
+        guestCount: '',
+        musicPreference: '',
+        message: ''
+      });
+      setShowModal(false);
+      setIsSubmitted(false);
+    }
   };
 
   return (
@@ -225,7 +277,7 @@ const Booking = () => {
                 ))}
               </select>
             </div>
-
+            
             {/* Message */}
             <div className="lg:col-span-2 mt-2 sm:mt-4">
               <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 flex items-center gap-2">
@@ -246,19 +298,104 @@ const Booking = () => {
                 placeholder={t('booking.messagePlaceholder')}
               />
             </div>
-
+            
             {/* Submit Button */}
             <div className="lg:col-span-2 mt-4 sm:mt-6">
               <button
                 type="submit"
                 className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg text-sm sm:text-base uppercase tracking-wider hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/50 transition-all duration-300 border border-emerald-400/30"
               >
-                {t('booking.submit')}
+                {isLoading ? <Loader2 className="animate-spin" size={20} /> : t('booking.submit')}
               </button>
             </div>
           </form>
         </div>
       </div>
+
+      {/* Modal Popup */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl max-w-sm sm:max-w-lg w-full mx-4 relative shadow-2xl border border-emerald-500/30 overflow-hidden">
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 z-20 text-white bg-emerald-500/20 hover:bg-emerald-500/40 rounded-full p-2 transition-all duration-300 border border-emerald-500/50"
+            >
+              <X size={20} />
+            </button>
+            
+            {/* Loading State */}
+            {isLoading && (
+              <div className="relative">
+                {/* DJ Image - More Visible */}
+                <div className="h-64 sm:h-80 relative overflow-hidden">
+                  <img 
+                    src="/assets/images/testimonials/chezzyAnfrage.png" 
+                    alt="DJ Chezzy"
+                    className="w-full h-full object-cover object-center"
+                    style={{objectPosition: 'center top'}}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/50"></div>
+                </div>
+                
+                {/* Loading Content Overlay */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+                  <Loader2 className="w-16 h-16 sm:w-20 sm:h-20 animate-spin text-emerald-400 mb-6" />
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-emerald-400">Buchungsanfrage wird übermittelt...</h3>
+                  <p className="text-sm sm:text-base opacity-90 mb-6">DJ Chezzy wird benachrichtigt</p>
+                  
+                  {/* Progress Bar */}
+                  <div className="w-full max-w-xs bg-black/40 rounded-full h-3 border border-emerald-500/30">
+                    <div className="bg-gradient-to-r from-emerald-400 to-blue-400 h-full rounded-full animate-pulse" style={{width: '75%'}}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Success State */}
+            {isSubmitted && !isLoading && (
+              <div className="relative">
+                {/* DJ Image - Fully Visible */}
+                <div className="h-64 sm:h-80 relative overflow-hidden">
+                  <img 
+                    src="/assets/images/testimonials/chezzyAnfrage.png" 
+                    alt="DJ Chezzy"
+                    className="w-full h-full object-cover object-center"
+                    style={{objectPosition: 'center top'}}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                </div>
+                
+                {/* Success Content Overlay */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+                  <CheckCircle className="w-20 h-20 sm:w-24 sm:h-24 text-emerald-400 mb-4" />
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-3 text-emerald-400">Fantastisch! 🎉</h3>
+                  <p className="text-base sm:text-lg opacity-90 mb-6">DJ Chezzy hat Ihre Buchungsanfrage erhalten!</p>
+                </div>
+                
+                {/* Bottom Content */}
+                <div className="bg-gradient-to-r from-gray-900 to-black p-6 sm:p-8 text-center border-t border-emerald-500/30">
+                  <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mb-6">
+                    <p className="text-emerald-400 font-bold text-sm sm:text-base mb-2">
+                      🎵 Ich erstelle Ihnen ein individuelles Angebot!
+                    </p>
+                    <p className="text-gray-300 text-xs sm:text-sm">
+                      Sie erhalten eine Antwort innerhalb von 24 Stunden
+                    </p>
+                  </div>
+                  
+                  <button
+                    onClick={closeModal}
+                    className="w-full bg-gradient-to-r from-emerald-500 to-blue-500 hover:from-emerald-400 hover:to-blue-400 text-white font-bold py-4 px-6 rounded-xl text-sm sm:text-base uppercase tracking-wider transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/50 border border-emerald-400/30"
+                  >
+                    Verstanden ✓
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

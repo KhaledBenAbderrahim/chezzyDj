@@ -46,8 +46,8 @@ const About = () => {
             </p>
             <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
               Ob Hochzeit, Geburtstag oder Firmenevent – ich bringe die Erfahrung, das Feingefühl und die Energie mit, um für eine volle Tanzfläche und glückliche Gäste zu sorgen.
-            </p>
-          </div>
+              </p>
+            </div>
 
           {/* Image */}
           <div className="animate-fadeInRight order-1 lg:order-2">
@@ -61,7 +61,7 @@ const About = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent"></div>
             </div>
           </div>
-        </div>
+                </div>
 
         {/* --- Stats Section --- */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center mb-12 sm:mb-20 lg:mb-28">
@@ -69,9 +69,9 @@ const About = () => {
             <div key={index} className="animate-fadeInUp" style={{ animationDelay: `${index * 100}ms`}}>
               <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-emerald-600">{stat.value}</p>
               <p className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mt-1 sm:mt-2">{stat.label}</p>
-            </div>
-          ))}
-        </div>
+                </div>
+                    ))}
+                </div>
 
         {/* --- Why Choose Me Section --- */}
         <div className="text-center">
@@ -87,8 +87,8 @@ const About = () => {
                 </div>
                 <h4 className="text-lg sm:text-xl font-bold mb-2">{point.title}</h4>
                 <p className="text-sm sm:text-base text-gray-600">{point.text}</p>
-              </div>
-            ))}
+                </div>
+              ))}
           </div>
         </div>
 
